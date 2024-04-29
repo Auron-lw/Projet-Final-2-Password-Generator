@@ -20,49 +20,57 @@ const generateUpperCaseChar = () => {
   return alphabet.substring(randomIndex, randomIndex + 1);
 };
 
-const questions = () => {
-  // Range of characters ?
-  const charRange = Number(
+const charLength = () => {
+  const passLength = Number(
     prompt(
       `How many characters you want (8-36) ?
     > `
     )
   );
-  // specials characters ?
-  const charSpecial = prompt(
+  if (!passLength && passLength < 8 && passLength > 36) {
+    console.log(
+      "Password length must have a length between 8 and 36 characters"
+    );
+    charLength();
+  }
+};
+
+const charSpecial = () => {
+  const charSpec = prompt(
     `Do you want special characters (y/n) ?
-    > `
+  > `
   ).toLowerCase();
-  // includes numbers ?
-  const charNumbers = prompt(
+
+  if (charSpec !== "y" && charSpec !== "n") {
+    console.log("Please answer with 'y' for 'yes' or 'n' for 'no'");
+    charSpecial();
+  }
+};
+
+const charNumbers = () => {
+  const charNumber = prompt(
     `Do you want numbers (y/n) ?
-    > `
+  > `
   ).toLowerCase();
-  // includes uppercase ?
+
+  if (charNumber !== "y" && charNumber !== "n") {
+    console.log("Please answer with 'y' for 'yes' or 'n' for 'no'");
+    charNumbers();
+  }
+};
+
+const charUpperCase = () => {
   const charUpper = prompt(
     `Do you want uppercase letters (y/n) ?
     > `
   ).toLowerCase();
-  console.log("----------------------------------------------");
 
-  if (!charRange || !charSpecial || !charNumbers || !charUpper) {
-    questions();
-  }
-
-  if (charRange < 8 || charRange > 36) {
-    questions();
-  }
-
-  if (charSpecial === "y") {
-    generateSpecialChar();
-  }
-
-  if (charNumbers === "y") {
-    generateRandomNumber(1, 9);
-  }
-
-  if (charUpper === "y") {
-    generateUpperCaseChar();
+  if (charUpper !== "y" && charUpper !== "n") {
+    console.log("Please answer with 'y' for 'yes' or 'n' for 'no'");
+    charUpperCase();
   }
 };
-questions();
+
+const questions = () => {};
+
+console.log("----------------------------------------------");
