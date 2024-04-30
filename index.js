@@ -1,5 +1,50 @@
 import { prompt } from "./prompt.js";
 
+const passwordLength = () => {
+  const passLengthInput = Number(
+    prompt("How many characters you want (8-36) ?\n> ")
+  );
+  if (passLengthInput < 8 || passLengthInput > 36 || isNaN(passLengthInput)) {
+    throw new Error("Password length must be a number between 8 and 36\n");
+  } else {
+    return passLengthInput;
+  }
+};
+
+const charSpecial = () => {
+  const charSpecInput = prompt("\nDo you want special characters (y/n) ?\n> ");
+
+  isYesOrNo(charSpecInput);
+
+  return charSpecInput;
+};
+
+const charNumbers = () => {
+  const charNumbersInput = prompt("\nDo you want numbers (y/n) ?\n> ");
+
+  isYesOrNo(charNumbersInput);
+
+  return charNumbersInput;
+};
+
+const charUpperCase = () => {
+  const charUpper = prompt("\nDo you want uppercase letters (y/n) ?\n> ");
+
+  isYesOrNo(charUpper);
+
+  return charUpper;
+};
+
+const isYesOrNo = (value) => {
+  if (value.toLowerCase().startsWith("y")) {
+    return true;
+  } else if (value.toLowerCase().startsWith("n")) {
+    return false;
+  }
+
+  throw new Error("Please answer with 'y' (yes) or 'n' (no)\n");
+};
+
 const generateRandomNumber = (min, max) => {
   return Math.random() * (max - min) + min;
 };
@@ -20,57 +65,28 @@ const generateUpperCaseChar = () => {
   return alphabet.substring(randomIndex, randomIndex + 1);
 };
 
-const charLength = () => {
-  const passLength = Number(
-    prompt(
-      `How many characters you want (8-36) ?
-    > `
-    )
-  );
-  if (!passLength && passLength < 8 && passLength > 36) {
-    console.log(
-      "Password length must have a length between 8 and 36 characters"
-    );
-    charLength();
+const core = () => {
+  let passLength = null;
+  let specialChar = null;
+  let numbersChar = null;
+  let UpperCaseChar = null;
+
+  while (
+    passLength === null ||
+    specialChar === null ||
+    numbersChar === null ||
+    UpperCaseChar === null
+  ) {
+    try {
+      passLength = passLength ? passLength : passwordLength();
+      specialChar = specialChar ? specialChar : charSpecial();
+      numbersChar = numbersChar ? numbersChar : charNumbers();
+      UpperCaseChar = UpperCaseChar ? UpperCaseChar : charUpperCase();
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 };
-
-const charSpecial = () => {
-  const charSpec = prompt(
-    `Do you want special characters (y/n) ?
-  > `
-  ).toLowerCase();
-
-  if (charSpec !== "y" && charSpec !== "n") {
-    console.log("Please answer with 'y' for 'yes' or 'n' for 'no'");
-    charSpecial();
-  }
-};
-
-const charNumbers = () => {
-  const charNumber = prompt(
-    `Do you want numbers (y/n) ?
-  > `
-  ).toLowerCase();
-
-  if (charNumber !== "y" && charNumber !== "n") {
-    console.log("Please answer with 'y' for 'yes' or 'n' for 'no'");
-    charNumbers();
-  }
-};
-
-const charUpperCase = () => {
-  const charUpper = prompt(
-    `Do you want uppercase letters (y/n) ?
-    > `
-  ).toLowerCase();
-
-  if (charUpper !== "y" && charUpper !== "n") {
-    console.log("Please answer with 'y' for 'yes' or 'n' for 'no'");
-    charUpperCase();
-  }
-};
-
-const questions = () => {};
+core();
 
 console.log("----------------------------------------------");
