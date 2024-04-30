@@ -1,33 +1,33 @@
 import { prompt } from "./prompt.js";
 
-const passwordLength = () => {
-  const passLengthInput = Number(
+const askPasswordLength = () => {
+  const passLength = Number(
     prompt("How many characters you want (8-36) ?\n> ")
   );
-  if (passLengthInput < 8 || passLengthInput > 36 || isNaN(passLengthInput)) {
+  if (passLength < 8 || passLength > 36 || isNaN(passLength)) {
     throw new Error("Password length must be a number between 8 and 36\n");
   } else {
-    return passLengthInput;
+    return passLength;
   }
 };
 
-const charSpecial = () => {
-  const charSpecInput = prompt("\nDo you want special characters (y/n) ?\n> ");
+const askSpecialChars = () => {
+  const charSpec = prompt("\nDo you want special characters (y/n) ?\n> ");
 
-  isYesOrNo(charSpecInput);
+  isYesOrNo(charSpec);
 
-  return charSpecInput;
+  return charSpec;
 };
 
-const charNumbers = () => {
-  const charNumbersInput = prompt("\nDo you want numbers (y/n) ?\n> ");
+const askNumbers = () => {
+  const charNumbers = prompt("\nDo you want numbers (y/n) ?\n> ");
 
-  isYesOrNo(charNumbersInput);
+  isYesOrNo(charNumbers);
 
-  return charNumbersInput;
+  return charNumbers;
 };
 
-const charUpperCase = () => {
+const askUpperCase = () => {
   const charUpper = prompt("\nDo you want uppercase letters (y/n) ?\n> ");
 
   isYesOrNo(charUpper);
@@ -50,7 +50,7 @@ const generateRandomNumber = (min, max) => {
 };
 
 const generateSpecialChar = () => {
-  const s = '!"§$%&/()=?\u{20ac}';
+  const s = "!@#$%^&*()";
 
   const randomIndex = Math.floor(Math.random() * s.length);
 
@@ -66,22 +66,22 @@ const generateUpperCaseChar = () => {
 };
 
 const core = () => {
-  let passLength = null;
+  let isLength = null;
   let specialChar = null;
-  let numbersChar = null;
-  let UpperCaseChar = null;
+  let numbers = null;
+  let upperCaseChar = null;
 
   while (
-    passLength === null ||
+    isLength === null ||
     specialChar === null ||
-    numbersChar === null ||
-    UpperCaseChar === null
+    numbers === null ||
+    upperCaseChar === null
   ) {
     try {
-      passLength = passLength ? passLength : passwordLength();
-      specialChar = specialChar ? specialChar : charSpecial();
-      numbersChar = numbersChar ? numbersChar : charNumbers();
-      UpperCaseChar = UpperCaseChar ? UpperCaseChar : charUpperCase();
+      isLength = isLength ? isLength : askPasswordLength();
+      specialChar = specialChar ? specialChar : askSpecialChars();
+      numbers = numbers ? numbers : askNumbers();
+      upperCaseChar = upperCaseChar ? upperCaseChar : askUpperCase();
     } catch (error) {
       console.log(error.message);
     }
