@@ -45,26 +45,6 @@ const isYesOrNo = (value) => {
   throw new Error("Please answer with 'y' (yes) or 'n' (no)\n");
 };
 
-const generateRandomNumber = (min, max) => {
-  return Math.random() * (max - min) + min;
-};
-
-const generateSpecialChar = () => {
-  const s = "!@#$%^&*()";
-
-  const randomIndex = Math.floor(Math.random() * s.length);
-
-  return s.substring(randomIndex, randomIndex + 1);
-};
-
-const generateUpperCaseChar = () => {
-  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-  const randomIndex = Math.floor(Math.random() * alphabet.length);
-
-  return alphabet.substring(randomIndex, randomIndex + 1);
-};
-
 const core = () => {
   let isLength = null;
   let specialChar = null;
@@ -86,7 +66,44 @@ const core = () => {
       console.log(error.message);
     }
   }
+
+  const LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
+  const UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const SPECIALS = "!@#$%^&*()";
+  const NUMBERS = "1234567890";
+
+  const generatePassword = (length, specials, numbers, uppercase) => {
+    let charset = LOWERCASE;
+
+    if (specials === "y") {
+      charset += SPECIALS;
+    }
+
+    if (numbers === "y") {
+      charset += NUMBERS;
+    }
+
+    if (uppercase === "y") {
+      charset += UPPERCASE;
+    }
+
+    let password = "";
+    for (let i = 0; i < length; i++) {
+      password += charset.charAt(Math.floor(Math.random() * charset.length));
+    }
+    return password;
+  };
+
+  const password = generatePassword(
+    isLength,
+    specialChar,
+    numbers,
+    upperCaseChar
+  );
+
+  console.log("\nPassword :", password);
 };
+
 core();
 
 console.log("----------------------------------------------");
