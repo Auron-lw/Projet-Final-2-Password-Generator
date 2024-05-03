@@ -94,6 +94,15 @@ const core = () => {
     return password;
   };
 
+  const hasUpperCase = (password) => {
+    for (let i = 0; i < password.length; i++) {
+      if (password[i] >= "A" && password[i] <= "Z") {
+        return true;
+      }
+    }
+    return false;
+  };
+
   const password = generatePassword(
     isLength,
     specialChar,
@@ -101,7 +110,11 @@ const core = () => {
     upperCaseChar
   );
 
-  console.log("\nPassword :", password);
+  if (hasUpperCase(password)) {
+    console.log("\nPassword :", password);
+  } else {
+    generatePassword(isLength, specialChar, numbers, upperCaseChar);
+  }
 };
 
 core();
